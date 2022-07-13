@@ -4,7 +4,7 @@ const User = require("../models/users.model");
 const crypto = require("crypto");
 
 const accountSid = "ACc6743498ecc5594abd932f7ae6680d88";
-const authToken = "d4b9674f3177fe4061cff881718270b6";
+const authToken = "dd747dad41bdedf93cc97bbab6088d71";
 const smsKey = "123456";
 let twilioNum = "+19854124683";
 const client = require("twilio")(accountSid, authToken);
@@ -44,9 +44,8 @@ router.get("/userData", async (req, res) => {
   }
 });
 router.get("/sendOTP", (req, res) => {
- 
-  const  phone  = "+91"+req.query.number;
-  console.log(phone)
+  const phone = "+91" + req.query.number;
+  console.log(phone);
   const otp = Math.floor(100000 + Math.random() * 900000); // generate OTP
 
   const ttl = 2 * 60 * 1000; // OTP expire time
@@ -72,11 +71,11 @@ router.get("/sendOTP", (req, res) => {
     })
 
     .then((messages) => {
-      res.status(200).json({ status:true,phone, hash: fullHash, otp });
+      res.status(200).send(`${otp}`)
     })
 
     .catch((err) => {
-      console.error("phone : ", err.message);
+      console.error("phone : ", err);
 
       return res.json({ error: err.message });
     });
